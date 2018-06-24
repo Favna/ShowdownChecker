@@ -51,6 +51,8 @@ const run = async function () {
   }
 };
 
+run();
+
 setInterval(() => {
   run();
 }, 72000000);
