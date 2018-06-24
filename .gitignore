@@ -1,0 +1,22 @@
+# Node modules need to be installed through yarn
+node_modules/
+
+# Environment variables
+.env
+
+# Any logs created
+*.log
+
+# Data folders
+src/data/databases/*
+
+# Folder keep
+!**/*.gitkeep
+
+# VSCode settings
+.vscode/
+
+# Code coverage results
+coverage/
+.nyc_output/
+src/commands/owner/test.js

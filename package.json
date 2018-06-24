@@ -1,0 +1,23 @@
+{
+  "name": "showdownchecker",
+  "version": "1.0.0",
+  "description": "checks the pokemon showdown repo for changes to the formats-data file",
+  "main": "app.js",
+  "author": "Jeroen Claassens <jeroen.claassens@live.nl>",
+  "license": "GPL-3.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=8.0.0 <9.0"
+  },
+  "dependencies": {
+    "moment": "^2.22.2",
+    "path": "^0.12.7",
+    "snekfetch": "devsnek/snekfetch"
+  },
+  "devDependencies": {
+    "eslint": "^5.0.0"
+  }
+}
