@@ -1,7 +1,9 @@
-const fs = require('fs'),
+const json = require('jsonfile'),
   moment = require('moment'),
   path = require('path'),
-  snek = require('snekfetch');
+  reqlive = require('require-from-url/sync'),
+  snek = require('snekfetch'),
+  {stripIndents} = require('common-tags');
 const isoformat = 'YYYY-MM-DD[T]HH:mm:ssZ';
 
 let lastfetch = moment().subtract(3, 'days').format(isoformat),
@@ -23,11 +25,27 @@ const run = async function () {
       return null;
     }
 
-    const file = await snek.get('https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/formats-data.js');
+    const formats = reqlive('https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/formats-data.js').BattleFormatsData;
+    const file = [];
     lastsha = data.sha;
     lastfetch = moment().format(isoformat);
 
-    return fs.writeFileSync(path.join(__dirname, 'dist/formats-data.js'), file.body);
+    for (const poke in formats) {
+      file.push({
+        name: poke,
+        tier: formats[poke].tier
+      });
+    }
+
+    json.writeFileSync(path.join(__dirname, '../ribbon/src/data/dex/formats.json'), file);
+
+    return console.log(stripIndents`
+    Successfully wrote updated formats data to file
+    **Latest SHA:** ${lastsha}
+    **Last Fetch:** ${lastfetch}
+    **Date:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss')}
+    ===================================
+    `);
   } catch (err) {
     return console.error(err);
   }
