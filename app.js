@@ -1,13 +1,17 @@
-const json = require('jsonfile'),
+const Log = require('log'),
+  fs = require('fs'),
+  json = require('jsonfile'),
   moment = require('moment'),
   path = require('path'),
   reqlive = require('require-from-url/sync'),
   snek = require('snekfetch'),
   {stripIndents} = require('common-tags');
-const isoformat = 'YYYY-MM-DD[T]HH:mm:ssZ';
 
-let lastfetch = moment().subtract(3, 'days').format(isoformat),
-  lastsha = 'a909b23d0d6122ca6f56470d01ee8894abc9c009';
+const isoformat = 'YYYY-MM-DD[T]HH:mm:ssZ',
+  log = new Log('debug', fs.createWriteStream('my.log')),
+  {lastsha} = json.readFileSync(path.join(__dirname, 'data.json'));
+
+let lastfetch = moment().subtract(3, 'days').format(isoformat);
 
 const run = async function () {
   try {
@@ -22,12 +26,12 @@ const run = async function () {
     if (data.sha === lastsha || data.length === 0) {
       lastfetch = moment().format(isoformat);
 
-      return null;
+      return log.notice('Fetched data but no new commit was available');
     }
 
     const formats = reqlive('https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/formats-data.js').BattleFormatsData;
     const file = [];
-    lastsha = data.sha;
+    json.writeFileSync(path.join(__dirname, 'data.json'), {lastsha: data.sha});
     lastfetch = moment().format(isoformat);
 
     for (const poke in formats) {
@@ -39,9 +43,9 @@ const run = async function () {
 
     json.writeFileSync(path.join(__dirname, '../ribbon/src/data/dex/formats.json'), file);
 
-    return console.log(stripIndents`
+    return log.info(stripIndents`
     Successfully wrote updated formats data to file
-    **Latest SHA:** ${lastsha}
+    **Latest SHA:** ${data.sha}
     **Last Fetch:** ${lastfetch}
     **Date:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss')}
     ===================================
@@ -52,7 +56,3 @@ const run = async function () {
 };
 
 run();
-
-setInterval(() => {
-  run();
-}, 72000000);
