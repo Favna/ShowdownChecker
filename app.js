@@ -8,7 +8,7 @@ const Log = require('log'),
   {stripIndents} = require('common-tags');
 
 const isoformat = 'YYYY-MM-DD[T]HH:mm:ssZ',
-  log = new Log('debug', fs.createWriteStream('my.log')),
+  log = new Log('debug', fs.createWriteStream('run.log')),
   {lastsha} = json.readFileSync(path.join(__dirname, 'data.json'));
 
 let lastfetch = moment().subtract(3, 'days').format(isoformat);
