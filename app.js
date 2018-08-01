@@ -38,7 +38,6 @@ const run = async function () {
     }
 
     json.writeFileSync(path.join(__dirname, '../ribbon/src/data/dex/formats.json'), file);
-    json.writeFileSync(path.join(__dirname, '../selfbot/src/data/dex/formats.json'), file);
 
     return console.log(stripIndents`
     Successfully wrote updated formats data to file
