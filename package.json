@@ -2,26 +2,45 @@
   "name": "showdownchecker",
   "version": "2.0.0",
   "description": "checks the pokemon showdown repo for changes to the formats-data file",
-  "main": "src/app.js",
   "author": "Jeroen Claassens <jeroen.claassens@live.nl>",
   "license": "GPL-3.0",
+  "main": "src/app.ts",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/favna/showdownchecker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/favna/showdownchecker/issues"
+  },
   "scripts": {
-    "start": "node app.js"
+    "lint": "tslint -p . -c ./tslint.json ./src/*.ts",
+    "lint:fix": "yarn lint --fix",
+    "clean": "rimraf dist/",
+    "prebuild": "yarn clean",
+    "build": "tsc",
+    "postbuild": "copyfiles -u 1 ./src/data.json ./dist/",
+    "start": "ts-node ./src/app.ts"
   },
   "engines": {
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "@types/common-tags": "^1.4.0",
+    "@types/jsonfile": "^4.0.1",
+    "@types/node": "^10.12.11",
+    "@types/node-fetch": "^2.1.4",
     "common-tags": "^1.8.0",
-    "jsonfile": "^4.0.0",
-    "log": "^1.4.0",
-    "moment": "^2.22.2",
+    "jsonfile": "^5.0.0",
+    "moment": "favna/moment#fix/typing_declaration",
     "node-fetch": "^2.3.0",
     "path": "^0.12.7",
-    "require-from-url": "^3.1.2"
+    "winston": "^3.1.0"
   },
   "devDependencies": {
-    "eslint": "^5.0.0"
+    "rimraf": "^2.6.2",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.2"
   }
 }

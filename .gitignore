@@ -1,22 +1,26 @@
 # Node modules need to be installed through yarn
 node_modules/
 
-# Environment variables
-.env
-
 # Any logs created
 *.log
+*.stackdump
+src/formats.json
 
-# Data folders
-src/data/databases/*
+# Dist folder
+dist/
 
-# Folder keep
-!**/*.gitkeep
-
-# VSCode settings
+# IDE settings
 .vscode/
+.idea/*
 
-# Code coverage results
-coverage/
-.nyc_output/
-src/commands/owner/test.js
+# Keep some IntelliJ Settings
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+!.idea/runConfigurations/
+!.idea/jsLibraryMappings.xml
+!.idea/misc.xml
+!.idea/modules.xml
+!.idea/ribbon.iml
+!.idea/sqldialects.xml
+!.idea/typescript-compiler.xml
+!.idea/vcs.xml
