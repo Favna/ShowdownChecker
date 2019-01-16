@@ -4,23 +4,17 @@ node_modules/
 # Any logs created
 *.log
 *.stackdump
-src/formats.json
 
 # Dist folder
 dist/
 
 # IDE settings
-.vscode/
 .idea/*
-
-# Keep some IntelliJ Settings
 !.idea/codeStyles/
 !.idea/inspectionProfiles/
 !.idea/runConfigurations/
 !.idea/jsLibraryMappings.xml
 !.idea/misc.xml
 !.idea/modules.xml
-!.idea/ribbon.iml
-!.idea/sqldialects.xml
-!.idea/typescript-compiler.xml
+!.idea/showdownchecker.iml
 !.idea/vcs.xml

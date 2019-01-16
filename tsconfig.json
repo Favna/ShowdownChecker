@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "outDir": "dist/",
-    "rootDir": "./src",
+    "outDir": "./dist/",
+    "rootDir": "./lib",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "lib": [
-      "es2018",
-      "dom"
+      "es2018"
     ],
     "target": "es6",
     "module": "commonjs",
@@ -19,15 +18,13 @@
     "noUnusedLocals": true,
     "removeComments": true,
     "resolveJsonModule": true,
-    "allowJs": true,
-    "checkJs": false
+    "strict": true
   },
   "include": [
-    "src/**/*.ts"
+    "lib/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "src/**/*.js"
+    "dist"
   ]
 }

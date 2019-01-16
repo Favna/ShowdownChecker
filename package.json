@@ -1,10 +1,10 @@
 {
   "name": "showdownchecker",
-  "version": "2.0.0",
-  "description": "checks the pokemon showdown repo for changes to the formats-data file",
+  "version": "3.0.0",
+  "description": "Checks the pokemon showdown repo for changes to the formats-data file",
   "author": "Jeroen Claassens <jeroen.claassens@live.nl>",
   "license": "GPL-3.0",
-  "main": "src/app.ts",
+  "main": "./dist/app.js",
   "private": true,
   "repository": {
     "type": "git",
@@ -26,21 +26,29 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@types/common-tags": "^1.4.0",
-    "@types/jsonfile": "^4.0.1",
-    "@types/node": "^10.12.11",
+    "@types/common-tags": "^1.8.0",
+    "@types/jsonfile": "^5.0.0",
+    "@types/node": "^10.12.18",
     "@types/node-fetch": "^2.1.4",
+    "awesome-querystring": "^1.1.5",
     "common-tags": "^1.8.0",
     "jsonfile": "^5.0.0",
     "moment": "favna/moment#fix/typing_declaration",
     "node-fetch": "^2.3.0",
-    "path": "^0.12.7",
     "winston": "^3.1.0"
   },
   "devDependencies": {
-    "rimraf": "^2.6.2",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-typescript": "^5.0.0",
+    "gulp-uglify-es": "^1.0.4",
+    "milky-tslint": "^1.0.1",
     "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "typescript": "^3.2.2"
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2",
+    "yargs": "^12.0.5"
   }
 }
