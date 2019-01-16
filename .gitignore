@@ -4,6 +4,7 @@ node_modules/
 # Any logs created
 *.log
 *.stackdump
+config/data.json
 
 # Dist folder
 dist/
