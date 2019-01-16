@@ -40,5 +40,5 @@ gulp.task('lint', () => {
 
 gulp.task('clean', () => del(['./dist']));
 gulp.task('watch', () => gulp.watch(tsSource, gulp.series('lint', 'build')));
-gulp.task('build', gulp.series('clean', compile));
+gulp.task('build', gulp.series('clean', compile, minify));
 gulp.task('default', gulp.parallel('watch', 'lint', 'build'));

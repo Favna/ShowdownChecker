@@ -14,6 +14,6 @@ const logger = createLogger({
     ],
 });
 
-check(`${process.env.home}/dev/ribbon/dist/data/dex/formats.json`)
+check(`${process.env.HOME}/dev/ribbon/dist/data/dex/formats.json`)
     .catch((err: any) => logger.error(err))
     .finally(() => logger.info(`showdown checker has ran`));
