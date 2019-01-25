@@ -42,7 +42,7 @@ const logger = createLogger({
     ],
 });
 
-export const check = async (outPath: string) => {
+export const check = async (outFiles: string[]) => {
     try {
         logger.info(moment().subtract(3, 'days').format('YYYY-MM-DD[T]HH:mm:ssZ'));
         const request = await fetch(`https://api.github.com/repos/Zarel/Pokemon-Showdown/commits?${stringify({
@@ -60,7 +60,7 @@ export const check = async (outPath: string) => {
         for (const mon in BattleFormatsData) output[mon] = BattleFormatsData[mon].tier;
 
         writeFileSync(`${configPath}/data.json`, { lastSha: data.sha });
-        writeFileSync(outPath, output);
+        outFiles.forEach((file: string) => writeFileSync(file, output));
 
         return logger.info(`Successfully wrote updated formats data to file; Latest SHA ${data.sha}`);
     } catch (err) {
