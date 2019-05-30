@@ -34,7 +34,7 @@
     "common-tags": "^1.8.0",
     "jsonfile": "^5.0.0",
     "moment": "favna/moment#fix/typing_declaration",
-    "node-fetch": "^2.5.0",
+    "node-fetch": "^2.6.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
