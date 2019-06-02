@@ -4,18 +4,13 @@ node_modules/
 # Any logs created
 *.log
 *.stackdump
-config/data.json
-
-# Dist folder
-dist/
+.DS_store
+logs/
 
 # IDE settings
-.idea/*
-!.idea/codeStyles/
-!.idea/inspectionProfiles/
-!.idea/runConfigurations/
-!.idea/jsLibraryMappings.xml
-!.idea/misc.xml
-!.idea/modules.xml
-!.idea/showdownchecker.iml
-!.idea/vcs.xml
+.idea/
+.vs/
+.vscode/
+
+# NPM Dist
+dist/

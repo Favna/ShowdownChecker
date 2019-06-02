@@ -1,4 +1,4 @@
-import { stringify } from 'awesome-querystring';
+import { stringify } from '@favware/querystring';
 import { readFileSync, writeFileSync } from 'jsonfile';
 import moment from 'moment';
 import fetch from 'node-fetch';
@@ -24,12 +24,12 @@ interface IModule extends Function {
 }
 
 const need = async (url: string) => {
-    const Module: IModule = module.constructor as IModule;
+    const nodeModule: IModule = module.constructor as IModule;
     const request = await fetch(url);
     const body: string = await request.text();
-    const m = new Module(url, module.parent);
+    const m = new nodeModule(url, module.parent);
     m.fileName = url;
-    m.paths = Module._nodeModulePaths(path.dirname(url));
+    m.paths = nodeModule._nodeModulePaths(path.dirname(url));
     m._compile(body, url);
     return m.exports;
 };

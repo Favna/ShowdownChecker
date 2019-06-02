@@ -1,10 +1,11 @@
 {
-  "name": "showdownchecker",
-  "version": "3.0.0",
+  "name": "@favware/showdownchecker",
+  "version": "4.0.0",
   "description": "Checks the pokemon showdown repo for changes to the formats-data file",
-  "author": "Jeroen Claassens <jeroen.claassens@live.nl>",
-  "license": "GPL-3.0",
-  "main": "./dist/app.js",
+  "author": "@favware",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "private": true,
   "repository": {
     "type": "git",
@@ -14,41 +15,46 @@
     "url": "https://github.com/favna/showdownchecker/issues"
   },
   "scripts": {
-    "lint": "tslint -p . -c ./tslint.json ./src/*.ts",
-    "lint:fix": "yarn lint --fix",
+    "lint": "tslint -p . -c ./tslint.json --format verbose --fix",
     "clean": "rimraf dist/",
-    "prebuild": "yarn clean",
+    "prebuild": "yarn clean && yarn lint",
     "build": "tsc",
-    "postbuild": "copyfiles -u 1 ./src/data.json ./dist/",
+    "postbuild": "yarn terser",
+    "prepublishOnly": "yarn build",
+    "terser": "terser-folder ./dist -eo ./dist -x .js",
     "start": "ts-node ./src/app.ts"
   },
   "engines": {
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "@favware/querystring": "^1.0.1",
+    "common-tags": "^1.8.0",
+    "jsonfile": "^5.0.0",
+    "moment": "^2.24.0",
+    "node-fetch": "^2.6.0",
+    "winston": "^3.2.1",
+    "tslib": "^1.9.3"
+  },
+  "devDependencies": {
     "@types/common-tags": "^1.8.0",
     "@types/jsonfile": "^5.0.0",
     "@types/node": "^12.0.4",
-    "@types/node-fetch": "^2.3.3",
-    "awesome-querystring": "^1.2.0",
-    "common-tags": "^1.8.0",
-    "jsonfile": "^5.0.0",
-    "moment": "favna/moment#fix/typing_declaration",
-    "node-fetch": "^2.6.0",
-    "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/register": "^7.4.4",
-    "del": "^4.1.1",
-    "gulp": "^4.0.2",
-    "gulp-typescript": "^5.0.1",
-    "gulp-uglify-es": "^1.0.4",
-    "milky-tslint": "^1.0.2",
-    "ts-node": "^8.1.0",
+    "@types/node-fetch": "^2.3.4",
+    "copyfiles": "^2.1.0",
+    "@favware/milky-tslint": "^1.0.5",
+    "@favware/tslint-config": "^1.0.1",
+    "ts-node": "^8.2.0",
     "tslint": "^5.17.0",
-    "typescript": "^3.4.5",
-    "yargs": "^13.2.2"
+    "typescript": "^3.5.1",
+    "rimraf": "^2.6.3",
+    "terser-folder": "^2.0.0"
+  },
+  "files": [
+    "dist/",
+    "config/data.json"
+  ],
+  "directories": {
+    "lib": "lib/"
   }
 }

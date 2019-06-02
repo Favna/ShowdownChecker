@@ -14,6 +14,14 @@ const logger = createLogger({
     ],
 });
 
-check([`${process.env.HOME}/dev/ribbon/dist/data/dex/formats.json`, `${process.env.HOME}/dev/ribbon/src/data/dex/formats.json`])
-    .catch((err: any) => logger.error(err))
-    .finally(() => logger.info(`showdown checker has ran`));
+export const run = (outputPath: string | string[]) => {
+    if (!Array.isArray(outputPath)) outputPath = [outputPath];
+
+    check(outputPath)
+        .catch((err: any) => logger.error(err))
+        .finally(() => logger.info(`showdown checker has ran`));
+};
+
+run([`${process.env.HOME}/dev/ribbon/dist/data/dex/formats.json`, `${process.env.HOME}/dev/ribbon/src/data/dex/formats.json`]);
+
+export default run;
