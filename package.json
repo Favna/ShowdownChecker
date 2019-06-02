@@ -48,7 +48,7 @@
     "milky-tslint": "^1.0.2",
     "ts-node": "^8.1.0",
     "tslint": "^5.17.0",
-    "typescript": "^3.4.5",
+    "typescript": "^3.5.1",
     "yargs": "^13.2.2"
   }
 }
