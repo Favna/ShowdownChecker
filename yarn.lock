@@ -30,10 +30,10 @@
     through "^2.3.8"
     tslib "^1.9.3"
 
-"@favware/querystring@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@favware/querystring/-/querystring-1.0.1.tgz#92511af8e4e56fb62bc4e0957cf9114d2ea505db"
-  integrity sha512-vdwLKowFWW/paYtCklxhypBqStmyNGG2pcgLoNGhE/4vMVjEo6pFJAZD0RYXSvB+Sl8C8IVjciasayI9g1cHDA==
+"@favware/querystring@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@favware/querystring/-/querystring-1.0.2.tgz#aa734df5aac086283fec62fdfcf7b3fd68af3945"
+  integrity sha512-ksDS51kH9lT7CH+YjN6kx1aD+bYwWalM0mux1lpyCKeO7O4YmmqrOv5yecm9cnk6F3EUzbwYjmmVScfsp6wbVw==
   dependencies:
     tslib "^1.9.3"
 
