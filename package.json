@@ -28,7 +28,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@favware/querystring": "^2.0.2",
+    "@favware/querystring": "^2.0.3",
     "common-tags": "^1.8.0",
     "jsonfile": "^5.0.0",
     "moment": "^2.24.0",
@@ -41,7 +41,7 @@
     "@favware/tslint-config": "^1.0.1",
     "@types/common-tags": "^1.8.0",
     "@types/jsonfile": "^5.0.0",
-    "@types/node": "^12.6.3",
+    "@types/node": "^12.6.8",
     "@types/node-fetch": "^2.3.7",
     "copyfiles": "^2.1.1",
     "rimraf": "^2.6.3",
