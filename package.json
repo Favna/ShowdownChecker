@@ -1,6 +1,6 @@
 {
   "name": "@favware/showdownchecker",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Checks the pokemon showdown repo for changes to the formats-data file",
   "author": "@favware",
   "license": "MIT",
@@ -19,34 +19,30 @@
     "clean": "rimraf dist/",
     "prebuild": "yarn clean && yarn lint",
     "build": "tsc",
-    "postbuild": "yarn terser",
     "prepublishOnly": "yarn build",
-    "terser": "terser-folder ./dist -eo ./dist -x .js",
     "start": "ts-node ./src/app.ts"
   },
   "engines": {
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@favware/querystring": "^2.0.2",
+    "@favware/querystring": "^2.0.3",
     "common-tags": "^1.8.0",
     "jsonfile": "^5.0.0",
     "moment": "^2.24.0",
     "node-fetch": "^2.6.0",
-    "tslib": "^1.10.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@favware/milky-tslint": "^1.0.5",
     "@favware/tslint-config": "^1.0.1",
     "@types/common-tags": "^1.8.0",
     "@types/jsonfile": "^5.0.0",
-    "@types/node": "^12.6.3",
-    "@types/node-fetch": "^2.3.7",
+    "@types/node-fetch": "^2.5.0",
+    "@types/node": "^12.6.8",
     "copyfiles": "^2.1.1",
     "rimraf": "^2.6.3",
-    "terser-folder": "^2.0.0",
     "ts-node": "^8.3.0",
+    "tslib": "^1.10.0",
     "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   },
