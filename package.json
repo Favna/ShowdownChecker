@@ -4,9 +4,33 @@
   "description": "Checks the pokemon showdown repo for changes to the formats-data file",
   "author": "@favware",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "private": true,
+  "scripts": {
+    "lint": "eslint lib --ext ts --fix",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "up": "yarn upgrade-interactive --latest"
+  },
+  "dependencies": {
+    "@klasa/timestamp": "^0.0.1",
+    "fs-nextra": "^0.4.7",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@favware/eslint-config": "^3.3.0",
+    "@favware/ts-config": "^1.1.2",
+    "@types/node": "^13.9.1",
+    "@types/node-fetch": "^2.5.5",
+    "eslint": "^6.8.0",
+    "lint-staged": "^10.0.8",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  },
+  "files": [],
+  "engines": {
+    "node": ">=10"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/favna/showdownchecker.git"
@@ -14,43 +38,19 @@
   "bugs": {
     "url": "https://github.com/favna/showdownchecker/issues"
   },
-  "scripts": {
-    "lint": "tslint -p . -c ./tslint.json --format verbose --fix",
-    "clean": "rimraf dist/",
-    "prebuild": "yarn clean && yarn lint",
-    "build": "tsc",
-    "prepublishOnly": "yarn build",
-    "start": "ts-node ./src/app.ts"
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged"
+    }
   },
-  "engines": {
-    "node": ">=8.0.0"
+  "lint-staged": {
+    "*.ts": [
+      "prettier --config .prettierrc --write",
+      "eslint --fix --ext ts"
+    ]
   },
-  "dependencies": {
-    "@favware/querystring": "^2.0.3",
-    "common-tags": "^1.8.0",
-    "jsonfile": "^5.0.0",
-    "moment": "^2.24.0",
-    "node-fetch": "^2.6.0",
-    "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "@favware/tslint-config": "^1.0.1",
-    "@types/common-tags": "^1.8.0",
-    "@types/jsonfile": "^5.0.0",
-    "@types/node-fetch": "^2.5.0",
-    "@types/node": "^12.6.9",
-    "copyfiles": "^2.1.1",
-    "rimraf": "^2.6.3",
-    "ts-node": "^8.3.0",
-    "tslib": "^1.10.0",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.3"
-  },
-  "files": [
-    "dist/",
-    "config/data.json"
-  ],
-  "directories": {
-    "lib": "lib/"
+  "resolutions": {
+    "acorn": "^7.1.1",
+    "minimist": "^1.2.2"
   }
 }

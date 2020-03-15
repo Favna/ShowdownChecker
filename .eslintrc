@@ -1,0 +1,6 @@
+{
+  "extends": ["@favware"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}

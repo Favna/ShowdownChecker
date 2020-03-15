@@ -1,23 +1,14 @@
 {
+  "extends": "@favware/ts-config",
   "compilerOptions": {
-    "outDir": "./dist/",
-    "rootDir": "./lib",
-    "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
-    "lib": ["es2018"],
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "newLine": "lf",
-    "noFallthroughCasesInSwitch": true,
-    "noErrorTruncation": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "removeComments": true,
-    "strict": true,
-    "declaration": true,
-    "importHelpers": true
+    "outDir": "dist",
+    "module": "CommonJS",
+    "target": "ES2019",
+    "rootDir": "lib",
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "importHelpers": false,
+    "declaration": false,
+    "sourceMap": false
   },
-  "include": ["lib/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["lib"]
 }

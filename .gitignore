@@ -7,10 +7,6 @@ node_modules/
 .DS_store
 logs/
 
-# IDE settings
-.idea/
-.vs/
-.vscode/
-
-# NPM Dist
+# Artifacts
 dist/
+config/out.json

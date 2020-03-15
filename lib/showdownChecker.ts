@@ -1,72 +1,58 @@
-import { stringify } from '@favware/querystring';
-import { readFileSync, writeFileSync } from 'jsonfile';
-import moment from 'moment';
+import { constants, Timestamp } from '@klasa/timestamp';
+import { readJSON, writeJSONAtomic } from 'fs-nextra';
 import fetch from 'node-fetch';
-import path from 'path';
-import { createLogger, format, transports } from 'winston';
+import { join } from 'path';
+import { DataJSON, Formats, needFile } from './utils';
 
-const configPath = path.join(__dirname, '../', 'config');
-const { lastsha } = readFileSync(`${configPath}/data.json`);
-const { printf } = format;
+export async function check(outFiles: string[]) {
+  const CONFIG_PATH = join(__dirname, '../', 'config');
+  const DATA_FILE = join(CONFIG_PATH, 'smogonTiersData.json');
 
-interface IEntry {
-    tier: string;
-}
+  const UPDATED_FORMATS_DATA = readJSON(DATA_FILE) as Promise<DataJSON>;
+  const TEN_DAYS_AGO = Date.now() - 10 * constants.DAY;
+  const TIMESTAMP = new Timestamp('YYYY-MM-DD[T]HH:mm:ssZ').display(TEN_DAYS_AGO);
 
-interface IFormats {
-    [propName: string]: IEntry;
-}
+  const url = new URL('https://api.github.com/repos/smogon/pokemon-showdown/commits');
+  url.searchParams.append('path', 'data/formats-data.js');
+  url.searchParams.append('since', TIMESTAMP);
 
-interface IModule extends Function {
-    _nodeModulePaths: any;
+  const request = await fetch(url);
 
-    new (url: string, parents: NodeModule | null): any;
-}
+  const [commits, { lastSha }] = await Promise.all([request.json(), UPDATED_FORMATS_DATA]);
 
-const need = async (url: string) => {
-    const nodeModule: IModule = module.constructor as IModule;
-    const request = await fetch(url);
-    const body: string = await request.text();
-    const m = new nodeModule(url, module.parent);
-    m.fileName = url;
-    m.paths = nodeModule._nodeModulePaths(path.dirname(url));
-    m._compile(body, url);
-    return m.exports;
-};
+  const data = { sha: commits.length ? commits[0].sha : null, length: commits.length };
+  const output: Formats = {};
+  if (!data) {
+    console.log('no data from request');
 
-const logger = createLogger({
-    format: printf(info => `[${moment().format('DD-MM-YYYY HH:mm:ssZ')}] [${info.level}]: ${info.message}`),
-    transports: [
-        new transports.File({ filename: `${configPath}/program.log` }),
-        new transports.Console()
-    ],
-});
+    return process.exit(1);
+  }
 
-export const check = async (outFiles: string[]) => {
-    try {
-        logger.info(moment().subtract(3, 'days').format('YYYY-MM-DD[T]HH:mm:ssZ'));
-        const request = await fetch(`https://api.github.com/repos/Zarel/Pokemon-Showdown/commits?${stringify({
-            path: 'data/formats-data.js',
-            since: moment().subtract(10, 'days').format('YYYY-MM-DD[T]HH:mm:ssZ'),
-        })}`);
-        const commits = await request.json();
-        const data = { sha: commits.length ? commits[0].sha : null, length: commits.length };
-        const output: IFormats = {};
+  if (data.sha === lastSha) {
+    console.log('Fetched data but no new commit was available');
 
-        if (!data.length) throw new Error('no_data');
-        if (data.sha === lastsha) throw new Error('same_hash');
-        const { BattleFormatsData } = await need('https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/formats-data.js');
+    return process.exit(0);
+  }
 
-        for (const mon in BattleFormatsData) output[mon] = BattleFormatsData[mon].tier;
+  const { BattleFormatsData } = await needFile('https://raw.githubusercontent.com/smogon/pokemon-showdown/master/data/formats-data.js');
 
-        writeFileSync(`${configPath}/data.json`, { lastSha: data.sha });
-        outFiles.forEach((file: string) => writeFileSync(file, output));
+  for (const mon in BattleFormatsData) {
+    const tier = BattleFormatsData[mon].isNonstandard || BattleFormatsData[mon].tier;
+    output[mon] = tier;
+  }
 
-        return logger.info(`Successfully wrote updated formats data to file; Latest SHA ${data.sha}`);
-    } catch (err) {
-        if (/(?:no_data)/i.test(err.toString())) return logger.error('No data was found');
-        if (/(?:same_hash)/i.test(err.toString())) return logger.info(`Fetched data but no new commit was available`);
+  const writePromises: Promise<void>[] = [];
 
-        return logger.error(err);
+  if (data.sha) writePromises.push(writeJSONAtomic(DATA_FILE, { lastSha: data.sha }));
+  if (output && Object.entries(output).length) {
+    for (const FORMATS_FILE of outFiles) {
+      writePromises.push(writeJSONAtomic(FORMATS_FILE, output));
     }
-};
+  }
+
+  await Promise.all(writePromises);
+
+  console.log(`Successfully wrote updated formats data to file; Latest SHA ${data.sha}`);
+
+  return process.exit(0);
+}
